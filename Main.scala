@@ -10,10 +10,13 @@ def main(args: Array[String]) {
 	val source = Source.fromFile("ps1_data/spam_train.txt")
 	val lines = source.getLines mkString "\n"
 	val emailList = getEmailList(lines)
-	println(emailList(54))
 	val tmp = emailList.splitAt(trainingSize)
 	val trainingDataSet = tmp._1
 	val validationDataSet = tmp._2
+	val vocab = buildVocabulary(trainingDataSet)
+	for( word <- vocab) {
+		println(word.toString)
+	}
 	val end = System.currentTimeMillis
 
 	println("Running time: " + (end-start) + " millis")
@@ -47,10 +50,29 @@ def getEmailList(inputFile: String) : List[(Char,String)] = {
 	return emails
 }
 
-def buildVocabulary(emailList: List[(Char,String)]) : HashMap[Int,String] = {
-	val map = new HashMap[Int,String]()
-	return map
+def buildVocabulary(emailList: List[(Char,String)]) : HashMap[String,Int] = {
+	var vocabulary = new HashMap[String,Int]()
+	for (email <- emailList) {
+		val words = email._2.split(" ")
+		var wordList = Set[String]()
+		for (word <- words) {
+			wordList = wordList + word
+		}
+		for (word <- wordList) {
+			var count = vocabulary.getOrElse(word,0)
+			count += 1
+			vocabulary += word -> count
+		}
+
+	}
+
+	return vocabulary
 } 
+
+def show(x: Option[Int]) = x match {
+      case Some(s) => s
+      case None => -1
+   }
 
 
 val args = Array[String]()
