@@ -5,49 +5,43 @@ def main(args: Array[String]) {
 	val start = System.currentTimeMillis
 	import scala.io.Source 
 	val trainingSize = 4000
-	var emailCount = 0
-	var currentEmail = ""
 	val source = Source.fromFile("ps1_data/spam_train.txt")
-	val lines = source.getLines mkString "\n"
+	val lines = source.getLines mkString ""
 	val emailList = getEmailList(lines)
 	val tmp = emailList.splitAt(trainingSize)
 	val trainingDataSet = tmp._1
 	val validationDataSet = tmp._2
 	val vocab = buildVocabulary(trainingDataSet)
-	for( word <- vocab) {
-		println(word.toString)
-	}
+	//println(vocab.size + "," + emailList.size)
 	val end = System.currentTimeMillis
 
 	println("Running time: " + (end-start) + " millis")
-
 
 }
 
 def getEmailList(inputFile: String) : List[(Char,String)] = {
 	var emails = List[(Char,String)]() 
 	var newIndex = 0
-	var newZeroIndex =0
-	var newOneIndex = 0
 	var currentIndex = 0
+	def constructEmail(beginIndex: Int, endIndex: Int, input: String) : (Char,String) = {
+		val emailText = input.slice(beginIndex,endIndex)
+		return (emailText.head,emailText.substring(1,emailText.length))
+	}
+	def setIndex(nextIndex: Int, defaultValue: Int) : Int = {
+		return (if (nextIndex > -1) nextIndex else defaultValue)
+	}
 	while({
-		newZeroIndex = inputFile.indexOf("0",currentIndex+1);
-		newOneIndex = inputFile.indexOf("1",currentIndex+1);
-		newZeroIndex = if (newZeroIndex > -1) newZeroIndex else inputFile.length+1;
-		newOneIndex = if (newOneIndex > -1) newOneIndex else inputFile.length+1;
-		newIndex = math.min(newZeroIndex,newOneIndex);
+		newIndex = math.min(setIndex(inputFile.indexOf("0",currentIndex+1),inputFile.length+1),
+		setIndex(inputFile.indexOf("1",currentIndex+1),inputFile.length+1));
 		newIndex != inputFile.length+1}) {
 
-		val emailText = inputFile.slice(currentIndex,newIndex)
-		val email = (emailText.head,emailText.substring(1,emailText.length))
+		val email = constructEmail(currentIndex,newIndex,inputFile)
 		emails ::= email
 		currentIndex=newIndex
 	}
-	val emailText = inputFile.slice(currentIndex,inputFile.length)
-	val email = (emailText.head,emailText.substring(1,emailText.length))
+	val email = constructEmail(currentIndex,inputFile.length,inputFile)
 	emails ::= email
-	emails = emails.reverse
-	return emails
+	return emails.reverse
 }
 
 def buildVocabulary(emailList: List[(Char,String)]) : HashMap[String,Int] = {
@@ -63,17 +57,10 @@ def buildVocabulary(emailList: List[(Char,String)]) : HashMap[String,Int] = {
 			count += 1
 			vocabulary += word -> count
 		}
-
 	}
-
-	return vocabulary
+	vocabulary.remove("")
+	return vocabulary.retain((k,v) => v > 30)
 } 
-
-def show(x: Option[Int]) = x match {
-      case Some(s) => s
-      case None => -1
-   }
-
 
 val args = Array[String]()
 main(args)
