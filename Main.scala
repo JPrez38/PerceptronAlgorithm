@@ -28,9 +28,9 @@ object Main {
 		val featureVectors = helper.makeFeatureVector(trainingDataSet,vocabList)
 		//println(featureVectors.get(validationDataSet(5)))
 		//featureVectors.foreach(vect => println(vect))
-		println(vocabList.size + "," + emailList.size)
-		println(featureVectors.size)
-		//val yourmom = Perceptron.perceptronTrain(featureVectors)
+		println(vocabList.size + "," + emailList.size + "," + featureVectors.size)
+		//featureVectors(3)._1.foreach(i => print(i))
+		val yourmom = Perceptron.perceptronTrain(featureVectors)
 		val end = System.currentTimeMillis
 
 		println("Running time: " + (end-start) + " millis")

@@ -5,14 +5,14 @@ import scala.collection.mutable.Map
 import scala.collection.mutable.HashMap
 
 object Support {
-	def getEmailList(inputFile: String) : List[(Char,String)] = {
+	def getEmailList(inputFile: String) : List[(Int,String)] = {
 		val start = System.currentTimeMillis
-		var emails = List[(Char,String)]() 
+		var emails = List[(Int,String)]() 
 		var newIndex = 0
 		var currentIndex = 0
-		def constructEmail(beginIndex: Int, endIndex: Int, input: String) : (Char,String) = {
+		def constructEmail(beginIndex: Int, endIndex: Int, input: String) : (Int,String) = {
 			val emailText = input.slice(beginIndex,endIndex)
-			return (emailText.head,emailText.substring(1,emailText.length))
+			return (emailText.head.asDigit,emailText.substring(1,emailText.length))
 		}
 		def setIndex(nextIndex: Int, defaultValue: Int) : Int = {
 			return (if (nextIndex > -1) nextIndex else defaultValue)
@@ -33,7 +33,7 @@ object Support {
 		return emails.reverse
 	}
 
-	def buildVocabulary(emailList: List[(Char,String)]) : Map[String,Int] = {
+	def buildVocabulary(emailList: List[(Int,String)]) : Map[String,Int] = {
 		val start = System.currentTimeMillis
 		var vocabulary = Map[String,Int]()
 		for (email <- emailList) {
@@ -54,19 +54,18 @@ object Support {
 
 
 
-	def makeFeatureVector(emailList: List[(Char,String)], vocabList: Array[String]) : List[(List[Int],Int)] = {
+	def makeFeatureVector(emailList: List[(Int,String)], vocabList: Array[String]) : List[(Array[Int],Int)] = {
 		val start = System.currentTimeMillis
-		println(emailList.size + "heello")
-		var emailFeatureVector = List[(List[Int],Int)]()
+		var emailFeatureVector = List[(Array[Int],Int)]()
 		var i = 0
 		for (email <- emailList) {
-			var featureVector = List[Int](vocabList.size)
+			var featureVector = new Array[Int](vocabList.size)
 			var vocabIndex = 0
 			val words = email._2.split(" ")
 			var wordList = HashMap[String,Int]()
-			words.foreach(word => wordList += word -> 0)
+			words.foreach(word => wordList += word -> 0) 
 			for (vocabWord <- vocabList) {
-				if(wordList.getOrElse(vocabWord,None) != None) featureVector ::= 1 else featureVector ::= 0
+				featureVector(vocabIndex) = if(wordList.getOrElse(vocabWord,None) != None) 1 else 0
 				vocabIndex+=1
 			}
 			val vector = (featureVector,email._1)

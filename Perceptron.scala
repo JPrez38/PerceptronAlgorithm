@@ -10,7 +10,7 @@ object Perceptron {
 		return (for ((x, y) <- m1 zip m2) yield x * y).sum
 	}
 
-	def perceptronTrain(data: List[(List[Int],Int)]) : (Array[Int],Int,Int) = {
+	def perceptronTrain(data: List[(Array[Int],Int)]) : (Array[Int],Int,Int) = {
 		val learningRate = .1
 		var weights = new Array[Int](data.size)
 		var k=0
