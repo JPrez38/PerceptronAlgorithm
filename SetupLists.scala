@@ -6,6 +6,7 @@ import scala.collection.mutable.HashMap
 
 object Support {
 	def getEmailList(inputFile: String) : List[(Char,String)] = {
+		val start = System.currentTimeMillis
 		var emails = List[(Char,String)]() 
 		var newIndex = 0
 		var currentIndex = 0
@@ -27,10 +28,13 @@ object Support {
 		}
 		val email = constructEmail(currentIndex,inputFile.length,inputFile)
 		emails ::= email
+		val end = System.currentTimeMillis
+		println("getEmaillist time:" + (end-start))
 		return emails.reverse
 	}
 
 	def buildVocabulary(emailList: List[(Char,String)]) : Map[String,Int] = {
+		val start = System.currentTimeMillis
 		var vocabulary = Map[String,Int]()
 		for (email <- emailList) {
 			val words = email._2.split(" ")
@@ -43,13 +47,18 @@ object Support {
 			}
 		}
 		vocabulary.remove("")
+		val end = System.currentTimeMillis
+		println("buildVocabulary time:" + (end-start))
 		return vocabulary.retain((k,v) => v >= 30)
 	} 
 
 
 
-	def makeFeatureVector(emailList: List[(Char,String)], vocabList: Array[String]) : Map[(Char,String),List[Int]] = {
-		var emailFeatureVector = Map[(Char,String),List[Int]]()
+	def makeFeatureVector(emailList: List[(Char,String)], vocabList: Array[String]) : List[(List[Int],Int)] = {
+		val start = System.currentTimeMillis
+		println(emailList.size + "heello")
+		var emailFeatureVector = List[(List[Int],Int)]()
+		var i = 0
 		for (email <- emailList) {
 			var featureVector = List[Int](vocabList.size)
 			var vocabIndex = 0
@@ -60,10 +69,12 @@ object Support {
 				if(wordList.getOrElse(vocabWord,None) != None) featureVector ::= 1 else featureVector ::= 0
 				vocabIndex+=1
 			}
-			//featureVector.foreach(vect => println(vect))
-			emailFeatureVector += email -> featureVector
-			//emailFeatureVector.get(email).foreach(x => println(x))
+			val vector = (featureVector,email._1)
+			emailFeatureVector ::= vector
 		}
+		
+		val end = System.currentTimeMillis
+		println("makeFeatureVector time:" + (end-start))
 		return emailFeatureVector
 	}
 }

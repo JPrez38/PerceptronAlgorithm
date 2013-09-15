@@ -25,10 +25,12 @@ object Main {
 			vocabIndex+=1
 		}
 		//vocabTally.foreach(word => println(word))
-		val featureVectors = helper.makeFeatureVector(validationDataSet,vocabList)
+		val featureVectors = helper.makeFeatureVector(trainingDataSet,vocabList)
 		//println(featureVectors.get(validationDataSet(5)))
 		//featureVectors.foreach(vect => println(vect))
 		println(vocabList.size + "," + emailList.size)
+		println(featureVectors.size)
+		//val yourmom = Perceptron.perceptronTrain(featureVectors)
 		val end = System.currentTimeMillis
 
 		println("Running time: " + (end-start) + " millis")
