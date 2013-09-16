@@ -12,7 +12,8 @@ object Main {
 		val trainingSize = 4000
 		val source = Source.fromFile("ps1_data/spam_train.txt")
 		val lines = source.getLines mkString ""
-		val emailList = helper.getEmailList(lines)
+		val data = lines.replaceAll("number"," number ")
+		val emailList = helper.getEmailList(data)
 		val tmp = emailList.splitAt(trainingSize)
 		val trainingDataSet = tmp._1
 		val validationDataSet = tmp._2
@@ -25,14 +26,23 @@ object Main {
 			vocabIndex+=1
 		}
 		//vocabTally.foreach(word => println(word))
-		val featureVectors = helper.makeFeatureVector(trainingDataSet,vocabList)
-		//println(featureVectors.get(validationDataSet(5)))
-		//featureVectors.foreach(vect => println(vect))
-		println(vocabList.size + "," + emailList.size + "," + featureVectors.size)
-		//featureVectors(3)._1.foreach(i => print(i))
-		val yourmom = Perceptron.perceptronTrain(featureVectors)
+		val trainingFeatureVectors = helper.makeFeatureVector(trainingDataSet,vocabList)
+		println(vocabList.size + "," + emailList.size + "," + trainingFeatureVectors.size)
+		val trainingData = Perceptron.perceptronTrain(trainingFeatureVectors)
+		val weights = trainingData._1
+		val k = trainingData._2
+		val iter = trainingData._3
+		val validationTrainingVectors = helper.makeFeatureVector(validationDataSet,vocabList)
+		val testError = Perceptron.perceptronTest(validationTrainingVectors,weights)
+		println(f"Test Error: $testError%1.3f")
 		val end = System.currentTimeMillis
 
 		println("Running time: " + (end-start) + " millis")
 	}
+
+	//def getHeaviestWeights(weights: Array[Double],vocabList: Map[String,Int]) : Array[Double] = {
+	//	var mostPositveWeights = new Array[Double](15)
+	//	var mostNegativeWeights = new Array[Double](15)
+
+	//}
 }

@@ -70,10 +70,11 @@ object Support {
 			}
 			val vector = (featureVector,email._1)
 			emailFeatureVector ::= vector
+			i+=1
 		}
 		
 		val end = System.currentTimeMillis
 		println("makeFeatureVector time:" + (end-start))
-		return emailFeatureVector
+		return emailFeatureVector.reverse
 	}
 }
