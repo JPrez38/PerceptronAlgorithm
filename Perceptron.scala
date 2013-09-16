@@ -46,7 +46,7 @@ object Perceptron {
 
 	def averagePerceptronTrain(data: List[(Array[Int],Int)],maxIter: Int) : (Array[Double],Int,Int) = {
 		var weights = new Array[Double](data(0)._1.size)
-		var allWeights = List[Array[Double]]()
+		var allWeights = new Array[Double](data(0)._1.size)
 		var k=0 //error count
 		var iter=0
 		var errorCount = -1
@@ -60,7 +60,7 @@ object Perceptron {
 				val error = desiredOutput-output
 				if (error!=0) {
 					errorCount+=1
-					allWeights ::= weights
+					for(i <- 0 until weights.length) allWeights(i) += weights(i)
 					weights = updateWeights(weights,featureVector,error)
 				} 
 			}
@@ -70,12 +70,9 @@ object Perceptron {
 		}
 
 		for (i <- 0 until weights.length) {
-			var sum = 0.0
-			for(weightSet <- allWeights) { sum += weightSet(i) }
-			weights(i) = sum/allWeights.size
+			var avg = allWeights(i)/k
+			weights(i) = avg
 		}
-		
-
 		return (weights,k,iter)
 	}
 

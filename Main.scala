@@ -28,7 +28,7 @@ object Main {
 		//vocabTally.foreach(word => println(word))
 		val trainingFeatureVectors = helper.makeFeatureVector(trainingDataSet,vocabList)
 		println(vocabList.size + "," + emailList.size + "," + trainingFeatureVectors.size)
-		val trainingData = Perceptron.perceptronTrain(trainingFeatureVectors)
+		val trainingData = Perceptron.averagePerceptronTrain(trainingFeatureVectors)
 		val weights = trainingData._1
 		val k = trainingData._2
 		val iter = trainingData._3
