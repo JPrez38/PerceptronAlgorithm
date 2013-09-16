@@ -36,17 +36,24 @@ object Main {
 		val testError = Perceptron.perceptronTest(validationTrainingVectors,weights)
 		println(f"Test Error: $testError%1.3f")
 		val heavyWeights = getHeaviestWeights(weights,vocabList)
+		val mostPositiveWeights = heavyWeights._1
+		val mostNegativeWeights = heavyWeights._2
+		mostPositiveWeights.foreach {x => println(x._1 + ":" + x._2)}
+		println()
+		mostNegativeWeights.foreach {x => println(x._1 + ":" + x._2)}
 		val end = System.currentTimeMillis
 
 		println("Running time: " + (end-start) + " millis")
 	}
 
-	def getHeaviestWeights(weights: Array[Double],vocabList: Array[String]) : Array[Double] = {
+	def getHeaviestWeights(weights: Array[Double],vocabList: Array[String]) : (List[(String,Double)],List[(String,Double)]) = {
 		var size = 15
 		var mostPositveWeights = new Array[Double](size)
 		var mostNegativeWeights = new Array[Double](size)
 		var mostPositveWeightsIndex = new Array[Int](size)
 		var mostNegativeWeightsIndex = new Array[Int](size)
+		var mostPositive = List[(String,Double)]()
+		var mostNegative = List[(String,Double)]()
 
 		for (i <- 0 until mostNegativeWeights.length) {mostNegativeWeights(i) = 10}
 
@@ -72,12 +79,12 @@ object Main {
 				j+=1
 			}
 		} 
-		for (j <- size-1 until 0 by -1) {
-			println(j + ":" + mostPositveWeights(j) + "," + vocabList(mostPositveWeightsIndex(j)))
+		for (j <- 0 until size) {
+			val tmp1 = (vocabList(mostPositveWeightsIndex(j)), mostPositveWeights(j))
+			val tmp2 = (vocabList(mostNegativeWeightsIndex(j)),mostNegativeWeights(j))
+			mostPositive ::= tmp1
+			mostNegative ::= tmp2
 		}
-		for (k <- size-1 until 0 by -1) {
-			println(k + ":" + mostNegativeWeights(k) + "," + vocabList(mostNegativeWeightsIndex(k)))
-		}
-		return mostPositveWeights
+		return (mostPositive,mostNegative)
 	}
 }
