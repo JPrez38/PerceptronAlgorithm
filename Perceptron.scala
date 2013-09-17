@@ -10,10 +10,6 @@ object Perceptron {
 		if (((for ((x, y) <- m1 zip m2) yield x * y).sum) >= .5) return 1 else 0
 	}
 
-	def perceptronTrain(data: List[(Array[Int],Int)]) : (Array[Double],Int,Int) = { 
-		return perceptronTrain(data,1000)
-	}
-
 	def perceptronTrain(data: List[(Array[Int],Int)],maxIter: Int) : (Array[Double],Int,Int) = {
 		var weights = new Array[Double](data(0)._1.size)
 		var k=0 //error count
@@ -33,21 +29,16 @@ object Perceptron {
 				} 
 			}
 			k+=errorCount
-			println(iter + ", errors:" + errorCount)
 			iter+=1
 		}
 
 		return (weights,k,iter)
 	}
 
-	def averagePerceptronTrain(data: List[(Array[Int],Int)]) : (Array[Double],Int,Int) = { 
-		return averagePerceptronTrain(data,1000)
-	}
-
 	def averagePerceptronTrain(data: List[(Array[Int],Int)],maxIter: Int) : (Array[Double],Int,Int) = {
 		var weights = new Array[Double](data(0)._1.size)
 		var allWeights = new Array[Double](data(0)._1.size)
-		var k=0 //error count
+		var k=0 /*error count*/
 		var iter=0
 		var errorCount = -1
 		while (iter < maxIter && errorCount!=0) {
@@ -65,7 +56,6 @@ object Perceptron {
 				} 
 			}
 			k+=errorCount
-			println(iter + ", errors:" + errorCount)
 			iter+=1
 		}
 
@@ -87,18 +77,17 @@ object Perceptron {
 			
 			if (error != 0) {
 				errorCount+=1
-				println("Error! desiredOutput: " + desiredOutput + ", output: " + output)
 			}
 		}
 		return errorCount/data.size.toDouble
 	}
 
 	def updateWeights(weights: Array[Double], vector: Array[Int], error: Int) : Array[Double] = {
-		val learningRate = .25
+		val learningRate=.25
 		for (i <- 0 until vector.length) {
+			/*weights(i) += (learningRate*error*vector(i))*/
 			weights(i) += (error*vector(i))
 		}
 		return weights
 	}
 }
-

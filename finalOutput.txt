@@ -1,0 +1,112 @@
+
+Regular Perceptron Train of with size N of 4000
+
+Total Training Errors:429, Iterations:18
+Test Error: 0.019
+
+Most Positive Weights:
+
+sight:20.0
+pleas:15.0
+nbsp:14.0
+our:14.0
+click:14.0
+remov:14.0
+guarante:14.0
+internet:13.0
+market:13.0
+most:12.0
+yourself:12.0
+present:12.0
+major:12.0
+deathtospamdeathtospamdeathtospam:12.0
+further:12.0
+
+Most Negative Weights:
+
+wrote:-15.0
+prefer:-14.0
+i:-14.0
+part:-12.0
+version:-12.0
+re:-11.0
+on:-11.0
+run:-11.0
+review:-10.0
+url:-10.0
+p:-10.0
+recipi:-10.0
+comput:-10.0
+reserv:-10.0
+rpm:-10.0
+
+Total Learning Time 10.576 seconds
+
+Regular Perceptron Train of with size N of 100
+
+Total Training Errors:34, Iterations:6
+Test Error: 0.081
+
+Average Perceptron Train of with size N of 100
+
+Total Training Errors:34, Iterations:6
+Test Error: 0.087
+
+Regular Perceptron Train of with size N of 200
+
+Total Training Errors:57, Iterations:5
+Test Error: 0.054
+
+Average Perceptron Train of with size N of 200
+
+Total Training Errors:57, Iterations:5
+Test Error: 0.060
+
+Regular Perceptron Train of with size N of 400
+
+Total Training Errors:73, Iterations:4
+Test Error: 0.040
+
+Average Perceptron Train of with size N of 400
+
+Total Training Errors:73, Iterations:4
+Test Error: 0.044
+
+Regular Perceptron Train of with size N of 800
+
+Total Training Errors:109, Iterations:5
+Test Error: 0.024
+
+Average Perceptron Train of with size N of 800
+
+Total Training Errors:109, Iterations:5
+Test Error: 0.034
+
+Regular Perceptron Train of with size N of 2000
+
+Total Training Errors:242, Iterations:9
+Test Error: 0.021
+
+Average Perceptron Train of with size N of 2000
+
+Total Training Errors:242, Iterations:9
+Test Error: 0.023
+
+Regular Perceptron Train of with size N of 4000
+
+Total Training Errors:429, Iterations:18
+Test Error: 0.019
+
+Average Perceptron Train of with size N of 4000
+
+Total Training Errors:429, Iterations:18
+Test Error: 0.015
+===============================
+
+RUN WITH TEST DATA AND FULL TRAINING SET
+
+Average Perceptron Train of with size N of 5000
+
+Total Training Errors:542, Iterations:15
+Test Error: 0.015
+ Total Running Time of all Tests: 45.5 seconds

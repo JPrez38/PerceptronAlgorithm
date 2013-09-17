@@ -6,7 +6,6 @@ import scala.collection.mutable.HashMap
 
 object Support {
 	def getEmailList(inputFile: String) : List[(Int,String)] = {
-		val start = System.currentTimeMillis
 		var emails = List[(Int,String)]() 
 		var newIndex = 0
 		var currentIndex = 0
@@ -28,13 +27,10 @@ object Support {
 		}
 		val email = constructEmail(currentIndex,inputFile.length,inputFile)
 		emails ::= email
-		val end = System.currentTimeMillis
-		println("getEmaillist time:" + (end-start))
 		return emails.reverse
 	}
 
 	def buildVocabulary(emailList: List[(Int,String)]) : Map[String,Int] = {
-		val start = System.currentTimeMillis
 		var vocabulary = Map[String,Int]()
 		for (email <- emailList) {
 			val words = email._2.split(" ")
@@ -47,15 +43,12 @@ object Support {
 			}
 		}
 		vocabulary.remove("")
-		val end = System.currentTimeMillis
-		println("buildVocabulary time:" + (end-start))
 		return vocabulary.retain((k,v) => v >= 30)
 	} 
 
 
 
 	def makeFeatureVector(emailList: List[(Int,String)], vocabList: Array[String]) : List[(Array[Int],Int)] = {
-		val start = System.currentTimeMillis
 		var emailFeatureVector = List[(Array[Int],Int)]()
 		var i = 0
 		for (email <- emailList) {
@@ -73,8 +66,6 @@ object Support {
 			i+=1
 		}
 		
-		val end = System.currentTimeMillis
-		println("makeFeatureVector time:" + (end-start))
 		return emailFeatureVector.reverse
 	}
 }
