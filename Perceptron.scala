@@ -31,7 +31,6 @@ object Perceptron {
 			k+=errorCount
 			iter+=1
 		}
-
 		return (weights,k,iter)
 	}
 
@@ -74,10 +73,7 @@ object Perceptron {
 
 			val output = dot(featureVector,weights)
 			val error = desiredOutput-output
-			
-			if (error != 0) {
-				errorCount+=1
-			}
+			if (error != 0) errorCount+=1
 		}
 		return errorCount/data.size.toDouble
 	}

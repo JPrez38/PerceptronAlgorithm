@@ -40,7 +40,7 @@ comput:-10.0
 reserv:-10.0
 rpm:-10.0
 
-Total Learning Time 10.576 seconds
+Total Learning Time 11.592 seconds
 
 Regular Perceptron Train of with size N of 100
 
@@ -107,6 +107,6 @@ RUN WITH TEST DATA AND FULL TRAINING SET
 
 Average Perceptron Train of with size N of 5000
 
-Total Training Errors:542, Iterations:15
-Test Error: 0.015
- Total Running Time of all Tests: 45.5 seconds
+Total Training Errors:521, Iterations:15
+Test Error: 0.014
+Total Running Time of all Tests: 51.622 seconds

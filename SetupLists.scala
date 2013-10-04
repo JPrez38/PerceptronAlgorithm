@@ -19,15 +19,15 @@ object Support {
 		while({
 			newIndex = math.min(setIndex(inputFile.indexOf("0",currentIndex+1),inputFile.length+1),
 			setIndex(inputFile.indexOf("1",currentIndex+1),inputFile.length+1));
-			newIndex != inputFile.length+1}) {
+			newIndex != inputFile.length+1}) { /*iterates over String finding all 1's or 0's */
 
 			val email = constructEmail(currentIndex,newIndex,inputFile)
 			emails ::= email
 			currentIndex=newIndex
 		}
 		val email = constructEmail(currentIndex,inputFile.length,inputFile)
-		emails ::= email
-		return emails.reverse
+		emails ::= email /* scala notation for adding item to begining of list */
+		return emails.reverse /* reverses to get correct ordering */
 	}
 
 	def buildVocabulary(emailList: List[(Int,String)]) : Map[String,Int] = {
@@ -42,11 +42,9 @@ object Support {
 				vocabulary += word -> count
 			}
 		}
-		vocabulary.remove("")
-		return vocabulary.retain((k,v) => v >= 30)
+		vocabulary.remove("") /* removes a random no space item from vocab list */
+		return vocabulary.retain((k,v) => v >= 30) /* returns a map of items that have value greater than 30 */
 	} 
-
-
 
 	def makeFeatureVector(emailList: List[(Int,String)], vocabList: Array[String]) : List[(Array[Int],Int)] = {
 		var emailFeatureVector = List[(Array[Int],Int)]()
@@ -65,7 +63,6 @@ object Support {
 			emailFeatureVector ::= vector
 			i+=1
 		}
-		
 		return emailFeatureVector.reverse
 	}
 }

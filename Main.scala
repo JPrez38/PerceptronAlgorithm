@@ -35,15 +35,22 @@ object Main {
 		}
 		
 		println("===============================\n\nRUN WITH TEST DATA AND FULL TRAINING SET")
-		val finalFeatureVectors = Support.makeFeatureVector(emailList,vocabList)
+		val newVocabTally = Support.buildVocabulary(emailList)
+		var newVocabList = new Array[String](newVocabTally.size)
+		var newVocabIndex = 0
+		for(word <- newVocabTally) { /*converts to simple array for faster iteration*/
+			newVocabList(newVocabIndex) = word._1
+			newVocabIndex+=1
+		}
+		val finalFeatureVectors = Support.makeFeatureVector(emailList,newVocabList)
 		val testData = getDataFromFile("ps1_data/spam_test.txt")
 		val testDataSet = Support.getEmailList(testData)
-		printPerceptronData(true,false,finalFeatureVectors,testDataSet,vocabList,15)
+		printPerceptronData(true,false,finalFeatureVectors,testDataSet,newVocabList,15)
 
 		
 		val end = System.currentTimeMillis
 
-		println(" Total Running Time of all Tests: " + (end-start)/1000.0 + " seconds")
+		println("Total Running Time of all Tests: " + (end-start)/1000.0 + " seconds")
 	}
 
 	def printPerceptronData(averaged: Boolean,printWeights: Boolean,featureVectors: List[(Array[Int],Int)],
